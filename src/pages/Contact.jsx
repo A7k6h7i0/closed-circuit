@@ -42,20 +42,24 @@ export default function Contact() {
     setStatus('loading');
 
     try {
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/d/YOUR_SCRIPT_ID/usercontent';
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
+      const googleScriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+      if (!googleScriptUrl) {
+        setStatus('error');
+        setMessage('Contact form is not configured. Please try again later.');
+        return;
+      }
+
+      const payload = new FormData();
+      for (const [key, value] of Object.entries(formData)) {
+        payload.append(key, value);
+      }
+
+      const response = await fetch(googleScriptUrl, {
         method: 'POST',
-        body: new FormData(
-          Object.entries(formData).reduce((form, [key, value]) => {
-            form.append(key, value);
-            return form;
-          }, new FormData())
-        ),
-      }).catch(() => {
-        return { ok: true };
+        body: payload,
       });
 
-      if (response.ok || true) {
+      if (response.ok) {
         setStatus('success');
         setMessage('Thank you! Your message has been received. We will contact you soon.');
         setFormData({
@@ -73,7 +77,7 @@ export default function Contact() {
         setStatus('error');
         setMessage('Something went wrong. Please try again.');
       }
-    } catch (err) {
+    } catch {
       setStatus('error');
       setMessage('An error occurred. Please check your connection and try again.');
     }

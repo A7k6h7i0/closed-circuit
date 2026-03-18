@@ -43,11 +43,6 @@ export default function Navbar() {
     return () => media.removeEventListener('change', handleChange);
   }, []);
 
-  useEffect(() => {
-    setIsOpen(false);
-    setActiveDropdown(null);
-  }, [location.pathname]);
-
   const isActive = (path) => location.pathname === path;
 
   const handleDropdownToggle = (label) => {
