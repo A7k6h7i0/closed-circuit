@@ -86,7 +86,7 @@ export default function TopReasons() {
                 <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-[0_0_15px_rgba(99,102,241,0.8)]" />
                 
                 {/* Giant watermark number */}
-                <div className="text-[140px] leading-none font-black absolute -top-4 -right-2 text-indigo-500/10 group-hover:text-indigo-500/20 group-hover:scale-110 transition-all duration-500 pointer-events-none select-none">
+                <div className="text-[140px] leading-none font-black absolute -top-4 -right-2 text-indigo-400/20 [text-shadow:0_0_18px_rgba(99,102,241,0.16)] group-hover:text-indigo-300/30 group-hover:scale-110 transition-all duration-500 pointer-events-none select-none">
                   {index + 1}
                 </div>
                 

@@ -22,7 +22,7 @@ const navItems = [
       { label: 'With WhatsApp', path: '/differ-whatsapp' },
     ],
   },
-  { label: 'Top Reasons', path: '/top-reasons' },
+  { label: 'Top 10 Reasons', path: '/top-reasons' },
   { label: 'Gifts', path: '/gifts' },
   { label: 'Use Cases', path: '/use-cases' },
   { label: 'Taglines', path: '/taglines' },
@@ -93,7 +93,7 @@ export default function Navbar() {
                       <button
                         type="button"
                         onClick={() => handleDropdownToggle(item.label)}
-                        className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                        className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 xl:px-5 py-2.5 text-[13px] xl:text-sm font-semibold transition-all duration-300 ${
                           activeDropdown === item.label || isSubActive
                             ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-white border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.3)]'
                             : 'text-slate-400 hover:text-white hover:bg-white/10 border border-transparent'
@@ -136,7 +136,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       to={item.path}
-                      className={`block whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 border ${
+                      className={`block whitespace-nowrap rounded-full px-4 xl:px-5 py-2.5 text-[13px] xl:text-sm font-semibold transition-all duration-300 border ${
                         isActive(item.path)
                           ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-white border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.3)]'
                           : 'text-slate-400 border-transparent hover:text-white hover:bg-white/10'

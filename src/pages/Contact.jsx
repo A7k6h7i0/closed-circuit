@@ -6,7 +6,7 @@ import Card from '../components/Card';
 import { visuals } from '../data/visuals';
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     fullName: '',
     mobileNumber: '',
     emailId: '',
@@ -14,7 +14,14 @@ export default function Contact() {
     state: '',
     country: '',
     lookingFor: '',
+    preferredContactMethod: '',
+    preferredDate: '',
+    preferredTime: '',
     description: '',
+  };
+
+  const [formData, setFormData] = useState({
+    ...initialFormData,
   });
 
   const [status, setStatus] = useState(null);
@@ -28,6 +35,10 @@ export default function Contact() {
     'Colleges',
     'Customers',
   ];
+
+  const preferredContactMethods = ['Call', 'Chat'];
+
+  const preferredTimeSlots = ['Morning', 'Afternoon', 'Evening'];
 
   const callWindows = [
     'Mon to Fri, 10:00 AM to 1:00 PM IST for project scoping and onboarding calls.',
@@ -74,16 +85,7 @@ export default function Contact() {
       if (response.ok) {
         setStatus('success');
         setMessage('Thank you! Your message has been received. We will contact you soon.');
-        setFormData({
-          fullName: '',
-          mobileNumber: '',
-          emailId: '',
-          town: '',
-          state: '',
-          country: '',
-          lookingFor: '',
-          description: '',
-        });
+        setFormData(initialFormData);
         setTimeout(() => setStatus(null), 5000);
       } else {
         setStatus('error');
@@ -231,9 +233,64 @@ export default function Contact() {
                           ))}
                         </select>
                       </motion.div>
+
+                      <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }} className="md:col-span-2">
+                        <label className={labelClasses}>Preferred Contact Method <span className="text-indigo-400">*</span></label>
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          {preferredContactMethods.map((method) => (
+                            <label
+                              key={method}
+                              className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 transition-all ${
+                                formData.preferredContactMethod === method
+                                  ? 'border-indigo-500/50 bg-indigo-500/10 text-white shadow-[0_0_18px_rgba(99,102,241,0.15)]'
+                                  : 'border-white/10 bg-[#0f172a]/50 text-slate-300 hover:border-white/20 hover:bg-white/[0.04]'
+                              }`}
+                            >
+                              <input
+                                type="radio"
+                                name="preferredContactMethod"
+                                value={method}
+                                checked={formData.preferredContactMethod === method}
+                                onChange={handleChange}
+                                required
+                                className="h-4 w-4 border-white/20 bg-transparent text-indigo-500 focus:ring-indigo-500/40"
+                              />
+                              <span className="text-sm font-semibold">{method}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </motion.div>
+
+                      <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.4 }}>
+                        <label className={labelClasses}>Preferred Date <span className="text-indigo-400">*</span></label>
+                        <input
+                          type="date"
+                          name="preferredDate"
+                          value={formData.preferredDate}
+                          onChange={handleChange}
+                          required
+                          className={`${inputClasses} [color-scheme:dark]`}
+                        />
+                      </motion.div>
+
+                      <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
+                        <label className={labelClasses}>Preferred Time <span className="text-indigo-400">*</span></label>
+                        <select
+                          name="preferredTime"
+                          value={formData.preferredTime}
+                          onChange={handleChange}
+                          required
+                          className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
+                        >
+                          <option value="">Select a time slot</option>
+                          {preferredTimeSlots.map((slot) => (
+                            <option key={slot} value={slot}>{slot}</option>
+                          ))}
+                        </select>
+                      </motion.div>
                     </div>
 
-                    <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
+                    <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
                       <label className={labelClasses}>Description</label>
                       <textarea
                         name="description"
