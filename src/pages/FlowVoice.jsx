@@ -26,7 +26,7 @@ export default function FlowVoice() {
   ];
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-[#030712] text-slate-300">
       <Hero
         eyebrow="App Flow"
         title="Flow in Voice"
@@ -34,16 +34,19 @@ export default function FlowVoice() {
       />
 
       {/* 3-col feature strip — full width */}
-      <section className="bg-white py-14">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-6 sm:grid-cols-3">
+      <section className="relative py-24 border-b border-white/5 bg-[#030712] overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none" />
+        <div className="relative z-10 mx-auto max-w-6xl px-6">
+          <div className="grid gap-8 sm:grid-cols-3">
             {voiceFlow.map((item) => {
               const Icon = item.icon;
               return (
-                <Card key={item.title} className="p-6">
-                  <Icon className="h-6 w-6 text-indigo-500" />
-                  <h3 className="mt-4 text-lg font-semibold text-slate-900">{item.title}</h3>
-                  <p className="mt-2 text-sm text-slate-600">{item.description}</p>
+                <Card key={item.title} className="p-8 border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-all hover:-translate-y-1 group">
+                  <div className="p-4 bg-indigo-500/10 rounded-2xl w-fit mb-6 border border-indigo-500/20 group-hover:bg-indigo-500/20 transition-colors">
+                    <Icon className="h-8 w-8 text-indigo-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white tracking-tight">{item.title}</h3>
+                  <p className="mt-3 text-base text-slate-400 leading-relaxed">{item.description}</p>
                 </Card>
               );
             })}
@@ -52,44 +55,45 @@ export default function FlowVoice() {
       </section>
 
       {/* 2-col: text left | image right */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-6 grid gap-10 lg:grid-cols-2 items-center">
+      <section className="relative py-32 bg-[#0f172a]/40">
+        <div className="mx-auto max-w-6xl px-6 grid gap-12 lg:grid-cols-2 items-center">
           <motion.div
-            initial={{ x: -20, opacity: 0 }}
+            initial={{ x: -30, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <Card className="p-8">
-              <h3 className="font-display text-2xl font-semibold text-slate-900">Voices Feel More Personal</h3>
-              <p className="mt-3 text-slate-600">
+            <Card className="p-10 border border-white/10 bg-gradient-to-br from-indigo-500/5 to-transparent">
+              <h3 className="font-display text-4xl font-bold text-white tracking-tight leading-tight">Voices Feel More Personal</h3>
+              <p className="mt-6 text-lg text-slate-400 leading-relaxed">
                 Let grandparents share stories, parents send blessings, and communities broadcast updates in a warm,
                 human format.
               </p>
-              <ul className="mt-5 space-y-3 text-sm text-slate-600">
+              <ul className="mt-8 space-y-4 text-base font-medium text-slate-300">
                 {[
                   'Record voice messages directly in the app.',
                   'Admin reviews before voice posts go live.',
                   'Group-targeted broadcasts for relevant audiences.',
                   'Long-term memory preservation in your community archive.',
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
-                    {item}
+                  <li key={item} className="flex items-start gap-4">
+                    <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)]" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </Card>
           </motion.div>
           <motion.div
-            initial={{ x: 20, opacity: 0 }}
+            initial={{ x: 30, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <Card className="overflow-hidden p-0">
+            <Card className="overflow-hidden p-0 border border-white/10 group h-full">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent z-10 pointer-events-none opacity-40" />
               <img
                 src={visuals.voice}
                 alt="Voice note capture"
-                className="h-[320px] w-full object-cover"
+                className="h-full min-h-[400px] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                 loading="lazy"
               />
             </Card>
@@ -98,19 +102,19 @@ export default function FlowVoice() {
       </section>
 
       {/* 2-col: image left | text right */}
-      <section className="bg-aurora py-20">
-        <div className="mx-auto max-w-6xl items-center gap-8 px-6 grid lg:grid-cols-2">
-          <Card className="overflow-hidden p-0">
+      <section className="relative py-32 border-b border-white/5 bg-[#030712]">
+        <div className="mx-auto max-w-6xl items-center gap-12 px-6 grid lg:grid-cols-2">
+          <Card className="overflow-hidden p-0 border border-white/10 group h-full">
             <img
               src={visuals.secure}
               alt="Secure audio sharing"
-              className="h-[300px] w-full object-cover"
+              className="h-full min-h-[400px] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
               loading="lazy"
             />
           </Card>
-          <Card className="p-8">
-            <h3 className="font-display text-2xl font-semibold text-slate-900">Secure by Default</h3>
-            <p className="mt-3 text-slate-600">
+          <Card className="p-10 border border-white/10 bg-white/[0.02] h-full flex flex-col justify-center">
+            <h3 className="font-display text-4xl font-bold text-white tracking-tight">Secure by Default</h3>
+            <p className="mt-6 text-lg text-slate-400 leading-relaxed">
               Every voice memory stays inside the closed circuit. Only approved members can listen, respond, and keep
               the story alive.
             </p>

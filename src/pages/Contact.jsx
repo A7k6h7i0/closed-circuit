@@ -29,6 +29,18 @@ export default function Contact() {
     'Customers',
   ];
 
+  const callWindows = [
+    'Mon to Fri, 10:00 AM to 1:00 PM IST for project scoping and onboarding calls.',
+    'Sat, 11:30 AM to 2:30 PM IST for quick planning discussions and follow-ups.',
+    'Best for detailed requirement conversations, pricing walkthroughs, and launch timelines.',
+  ];
+
+  const chatWindows = [
+    'Daily, 9:00 AM to 9:00 PM IST for quick questions and first responses.',
+    'Average reply time: 15 to 30 minutes during active support hours.',
+    'Best for sharing ideas, collecting documents, and resolving small doubts quickly.',
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -83,127 +95,135 @@ export default function Contact() {
     }
   };
 
+  const inputClasses = "w-full px-4 py-3 bg-[#0f172a]/50 text-white border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all font-medium placeholder-slate-500";
+  const labelClasses = "block text-sm font-semibold text-slate-300 mb-2";
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
+      className="bg-[#030712] text-slate-300"
     >
       <Hero
         title="Get In Touch"
         subtitle="We'd love to hear from you. Share your details and let's connect!"
       />
 
-      <section className="py-20 px-4 bg-white">
-        <div className="mx-auto max-w-6xl">
+      <section className="relative py-32 border-b border-white/5 bg-[#030712] overflow-hidden">
+        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none" />
+        <div className="relative mx-auto max-w-6xl px-6 z-10">
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
+            initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <div className="grid gap-10 lg:grid-cols-2 items-start">
+            <div className="grid gap-12 lg:grid-cols-2 items-start">
               {/* Form */}
-              <Card className="p-10">
+              <Card className="p-8 md:p-10 border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.01]">
                 {status === 'success' ? (
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-center py-12"
+                    className="text-center py-16"
                   >
-                    <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3">Message Sent!</h3>
-                    <p className="text-gray-600">{message}</p>
+                    <div className="inline-flex items-center justify-center p-4 bg-green-500/20 rounded-full mb-6 relative">
+                      <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl" />
+                      <CheckCircle className="w-12 h-12 text-green-400 relative z-10" />
+                    </div>
+                    <h3 className="text-3xl font-display font-bold text-white mb-4 tracking-tight">Message Sent!</h3>
+                    <p className="text-lg text-slate-400 leading-relaxed">{message}</p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                        <label className={labelClasses}>Full Name <span className="text-indigo-400">*</span></label>
                         <input
                           type="text"
                           name="fullName"
                           value={formData.fullName}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="Your name"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.05 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number *</label>
+                        <label className={labelClasses}>Mobile Number <span className="text-indigo-400">*</span></label>
                         <input
                           type="tel"
                           name="mobileNumber"
                           value={formData.mobileNumber}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="+91 XXXXX XXXXX"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Email ID *</label>
+                        <label className={labelClasses}>Email ID <span className="text-indigo-400">*</span></label>
                         <input
                           type="email"
                           name="emailId"
                           value={formData.emailId}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="your@email.com"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Town/City *</label>
+                        <label className={labelClasses}>Town/City <span className="text-indigo-400">*</span></label>
                         <input
                           type="text"
                           name="town"
                           value={formData.town}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="Your town"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">State *</label>
+                        <label className={labelClasses}>State <span className="text-indigo-400">*</span></label>
                         <input
                           type="text"
                           name="state"
                           value={formData.state}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="Your state"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.25 }}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Country *</label>
+                        <label className={labelClasses}>Country <span className="text-indigo-400">*</span></label>
                         <input
                           type="text"
                           name="country"
                           value={formData.country}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={inputClasses}
                           placeholder="Your country"
                         />
                       </motion.div>
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="md:col-span-2">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Looking For *</label>
+                        <label className={labelClasses}>Looking For <span className="text-indigo-400">*</span></label>
                         <select
                           name="lookingFor"
                           value={formData.lookingFor}
                           onChange={handleChange}
                           required
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition"
+                          className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
                         >
                           <option value="">Select an option</option>
                           {lookingForOptions.map((option) => (
@@ -214,12 +234,12 @@ export default function Contact() {
                     </div>
 
                     <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.35 }}>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                      <label className={labelClasses}>Description</label>
                       <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-600 transition h-32 resize-none"
+                        className={`${inputClasses} h-32 resize-none`}
                         placeholder="Tell us more about your needs..."
                       />
                     </motion.div>
@@ -228,10 +248,10 @@ export default function Contact() {
                       <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="flex items-center space-x-3 bg-red-50 border border-red-200 rounded-lg p-4"
+                        className="flex items-center space-x-3 bg-red-500/10 border border-red-500/20 rounded-xl p-4"
                       >
-                        <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-                        <p className="text-red-700">{message}</p>
+                        <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
+                        <p className="text-red-300 text-sm font-medium">{message}</p>
                       </motion.div>
                     )}
 
@@ -240,7 +260,7 @@ export default function Contact() {
                       whileTap={{ scale: 0.98 }}
                       type="submit"
                       disabled={status === 'loading'}
-                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-lg font-bold text-lg hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                      className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white py-4 rounded-xl font-bold text-lg shadow-[0_0_20px_rgba(99,102,241,0.3)] hover:shadow-[0_0_30px_rgba(99,102,241,0.5)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-3 mt-6 border border-white/10"
                     >
                       {status === 'loading' ? (
                         <>
@@ -259,28 +279,29 @@ export default function Contact() {
               </Card>
 
               {/* Right column: image + what happens next */}
-              <div className="grid gap-6">
-                <Card className="overflow-hidden p-0">
+              <div className="grid gap-8">
+                <Card className="overflow-hidden p-0 border border-white/10 group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent z-10 pointer-events-none opacity-60" />
                   <img
                     src={visuals.contact}
                     alt="Friendly support team"
-                    className="h-[280px] w-full object-cover"
+                    className="h-[350px] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     loading="lazy"
                   />
                 </Card>
-                <Card className="p-8">
-                  <h3 className="font-display text-xl font-semibold text-slate-900">What Happens Next</h3>
-                  <p className="mt-3 text-sm text-slate-600">
+                <Card className="p-8 border border-white/10 bg-white/[0.02]">
+                  <h3 className="font-display text-2xl font-bold text-white tracking-tight">What Happens Next</h3>
+                  <p className="mt-4 text-base text-slate-400 leading-relaxed">
                     We review your needs, propose the best setup, and guide you through launch with a dedicated team.
                   </p>
-                  <div className="mt-5 grid gap-3">
+                  <div className="mt-8 grid gap-4">
                     {['Fast response within 24 hours', 'Private onboarding call', 'Tailored platform setup'].map(
                       (item) => (
                         <div
                           key={item}
-                          className="flex items-center gap-3 rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-3 text-sm text-slate-600"
+                          className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4 text-sm font-medium text-slate-300 hover:bg-white/[0.05] transition-colors"
                         >
-                          <span className="h-2 w-2 shrink-0 rounded-full bg-indigo-500" />
+                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
                           {item}
                         </div>
                       )
@@ -291,21 +312,79 @@ export default function Contact() {
             </div>
           </motion.div>
 
+          <div className="mt-10 grid w-full gap-6 items-stretch lg:grid-cols-2">
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="w-full"
+            >
+              <Card className="h-full w-full p-8 md:p-9 border border-white/10 bg-gradient-to-br from-indigo-500/12 via-indigo-500/5 to-white/[0.02]">
+                <p className="text-sm font-bold uppercase tracking-[0.28em] text-indigo-400">When To Call</p>
+                <h3 className="mt-4 font-display text-3xl font-bold text-white tracking-tight">
+                  Best for detailed conversations and faster decisions.
+                </h3>
+                <p className="mt-4 text-base text-slate-400 leading-relaxed">
+                  Pick a call when you want to discuss setup, launch planning, pricing flow, or your exact project
+                  requirements in one focused conversation.
+                </p>
+                <div className="mt-8 grid gap-4">
+                  {callWindows.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-2xl border border-white/5 bg-white/[0.04] px-5 py-5 text-sm font-medium leading-relaxed text-slate-300"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="w-full"
+            >
+              <Card className="h-full w-full p-8 md:p-9 border border-white/10 bg-gradient-to-br from-purple-500/12 via-purple-500/5 to-white/[0.02]">
+                <p className="text-sm font-bold uppercase tracking-[0.28em] text-purple-400">When To Chat</p>
+                <h3 className="mt-4 font-display text-3xl font-bold text-white tracking-tight">
+                  Best for quick questions, updates, and simple follow-ups.
+                </h3>
+                <p className="mt-4 text-base text-slate-400 leading-relaxed">
+                  Use chat when you want lightweight back-and-forth, document sharing, quick clarifications, or
+                  a fast first response without booking a call.
+                </p>
+                <div className="mt-8 grid gap-4">
+                  {chatWindows.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-2xl border border-white/5 bg-white/[0.04] px-5 py-5 text-sm font-medium leading-relaxed text-slate-300"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </motion.div>
+          </div>
+
           {/* Contact info strip */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
             {[
               { title: 'Email', value: 'info@closedcircuit.com' },
-              { title: 'Phone', value: '+91 XXXXX XXXXX' },
-              { title: 'Hours', value: '24/7 Support' },
+              { title: 'Phone', value: '+91 98765 43210' },
+              { title: 'Hours', value: 'Mon-Sat, 9:00 AM - 9:00 PM IST' },
             ].map((contact, idx) => (
-              <Card key={idx} className="p-8 text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">{contact.title}</h3>
-                <p className="text-indigo-600 font-semibold">{contact.value}</p>
+              <Card key={idx} className="p-8 text-center border border-white/10 bg-gradient-to-br from-indigo-500/5 to-transparent hover:border-indigo-500/20 transition-all hover:-translate-y-1">
+                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{contact.title}</h3>
+                <p className="text-indigo-400 font-semibold text-lg">{contact.value}</p>
               </Card>
             ))}
           </motion.div>
