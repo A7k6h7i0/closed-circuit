@@ -5,6 +5,7 @@ export default function Hero({
   subtitle,
   eyebrow,
   gradient = 'from-[#030712] via-[#0f172a] to-[#030712]',
+  contentClassName = 'mx-auto max-w-6xl px-6 py-32 md:py-48 text-center',
 }) {
   return (
     <motion.section
@@ -19,7 +20,7 @@ export default function Hero({
         <div className="absolute bottom-[-10%] left-1/2 -translate-x-1/2 h-[300px] w-full bg-gradient-to-t from-black to-transparent z-10" />
       </div>
 
-      <div className="relative z-20 mx-auto max-w-6xl px-6 py-32 md:py-48 text-center">
+      <div className={`relative z-20 ${contentClassName}`}>
         {eyebrow && (
           <motion.span
             initial={{ opacity: 0, y: 10 }}

@@ -114,12 +114,13 @@ export default function Taglines() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-[#030712] text-slate-300">
       <Hero
         eyebrow="Family Platform"
-        title="10 Reasons Families Are Moving from WhatsApp Groups to Private Family Platforms"
+        title="Luxurious redefined with Closed Circuit."
         subtitle="Many families begin with messaging groups to stay connected, but as communities grow, they discover that chat apps are not designed to preserve memories, manage large family networks, or create a lasting digital home."
         gradient="from-[#020617] via-[#0f172a] to-[#030712]"
+        contentClassName="mx-auto max-w-6xl px-6 py-20 md:py-24 text-center"
       />
 
-      <section className="relative overflow-hidden border-b border-white/5 bg-[#020617] py-8">
+      <section className="relative overflow-hidden border-b border-white/5 bg-[#020617] py-5 md:py-6">
         <motion.div
           animate={{ x: ['0%', '-50%'] }}
           transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}

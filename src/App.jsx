@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 
@@ -17,10 +18,21 @@ import UseCases from './pages/UseCases';
 import Taglines from './pages/Taglines';
 import Contact from './pages/Contact';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <Router>
       <div className="min-h-screen bg-slate-50">
+        <ScrollToTop />
         <Navbar />
         <AnimatePresence mode="wait">
           <Routes>
