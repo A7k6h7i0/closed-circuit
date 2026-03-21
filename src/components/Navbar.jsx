@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
-import closedCircuitLogo from '../assets/closed-circuit-logo.png';
 
 const navItems = [
   { label: 'Home', path: '/' },
@@ -68,12 +67,11 @@ export default function Navbar() {
         className="fixed top-0 z-50 w-full border-b border-white/5 bg-[#030712]/70 backdrop-blur-2xl"
       >
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-          <Link to="/" className="group flex items-center gap-4">
-            <img
-              src={closedCircuitLogo}
-              alt="Closed Circuit logo"
-              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-16"
-            />
+          <Link to="/" className="flex items-center gap-4 group">
+            <div className="relative grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-transform duration-300 group-hover:scale-105">
+              <span className="absolute inset-0 rounded-2xl bg-white/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></span>
+              <span className="relative z-10">CC</span>
+            </div>
             <div className="hidden sm:block">
               <p className="font-display text-xl font-bold text-white tracking-wide">Closed Circuit</p>
               <p className="text-[10px] font-medium uppercase tracking-[0.4em] text-indigo-400">Private Network</p>
