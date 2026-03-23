@@ -3,9 +3,16 @@ import { motion } from 'framer-motion';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
-import { visuals } from '../data/visuals';
 
 export default function Contact() {
+  const formatPreferredTime = (hour, minute, period) => {
+    if (!hour || !minute || !period) {
+      return '';
+    }
+
+    return `${hour}:${minute} ${period}`;
+  };
+
   const initialFormData = {
     fullName: '',
     mobileNumber: '',
@@ -26,6 +33,9 @@ export default function Contact() {
 
   const [status, setStatus] = useState(null);
   const [message, setMessage] = useState('');
+  const [preferredHour, setPreferredHour] = useState('');
+  const [preferredMinute, setPreferredMinute] = useState('');
+  const [preferredPeriod, setPreferredPeriod] = useState('');
 
   const lookingForOptions = [
     'DOB',
@@ -37,8 +47,9 @@ export default function Contact() {
   ];
 
   const preferredContactMethods = ['Call', 'Chat'];
-
-  const preferredTimeSlots = ['Morning', 'Afternoon', 'Evening'];
+  const hourOptions = Array.from({ length: 12 }, (_, index) => String(index + 1).padStart(2, '0'));
+  const minuteOptions = Array.from({ length: 60 }, (_, index) => String(index).padStart(2, '0'));
+  const periodOptions = ['AM', 'PM'];
 
   const callWindows = [
     'Mon to Fri, 10:00 AM to 1:00 PM IST for project scoping and onboarding calls.',
@@ -60,37 +71,68 @@ export default function Contact() {
     }));
   };
 
+  const handleTimeChange = (field, value) => {
+    const nextHour = field === 'hour' ? value : preferredHour;
+    const nextMinute = field === 'minute' ? value : preferredMinute;
+    const nextPeriod = field === 'period' ? value : preferredPeriod;
+
+    if (field === 'hour') {
+      setPreferredHour(value);
+    }
+
+    if (field === 'minute') {
+      setPreferredMinute(value);
+    }
+
+    if (field === 'period') {
+      setPreferredPeriod(value);
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      preferredTime: formatPreferredTime(nextHour, nextMinute, nextPeriod),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('loading');
 
     try {
-      const googleScriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+      const googleScriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL?.trim();
       if (!googleScriptUrl) {
         setStatus('error');
-        setMessage('Contact form is not configured. Please try again later.');
+        setMessage('Contact form is not configured. Add your Google Apps Script web app URL in VITE_GOOGLE_SCRIPT_URL and restart the app.');
         return;
       }
 
-      const payload = new FormData();
-      for (const [key, value] of Object.entries(formData)) {
-        payload.append(key, value);
+      if (googleScriptUrl.includes('docs.google.com/spreadsheets')) {
+        setStatus('error');
+        setMessage('The contact form needs a Google Apps Script web app URL, not the spreadsheet share link. Update VITE_GOOGLE_SCRIPT_URL and restart the app.');
+        return;
       }
 
-      const response = await fetch(googleScriptUrl, {
+      const payload = new URLSearchParams();
+      for (const [key, value] of Object.entries(formData)) {
+        payload.append(key, value ?? '');
+      }
+
+      await fetch(googleScriptUrl, {
         method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        },
         body: payload,
       });
 
-      if (response.ok) {
-        setStatus('success');
-        setMessage('Thank you! Your message has been received. We will contact you soon.');
-        setFormData(initialFormData);
-        setTimeout(() => setStatus(null), 5000);
-      } else {
-        setStatus('error');
-        setMessage('Something went wrong. Please try again.');
-      }
+      setStatus('success');
+      setMessage('Thank you! Your message has been received. We will contact you soon.');
+      setFormData(initialFormData);
+      setPreferredHour('');
+      setPreferredMinute('');
+      setPreferredPeriod('');
+      setTimeout(() => setStatus(null), 5000);
     } catch {
       setStatus('error');
       setMessage('An error occurred. Please check your connection and try again.');
@@ -111,9 +153,10 @@ export default function Contact() {
       <Hero
         title="Get In Touch"
         subtitle="We'd love to hear from you. Share your details and let's connect!"
+        contentClassName="mx-auto max-w-5xl px-6 py-8 md:py-10 text-center"
       />
 
-      <section className="relative py-32 border-b border-white/5 bg-[#030712] overflow-hidden">
+      <section className="relative py-16 md:py-20 border-b border-white/5 bg-[#030712] overflow-hidden">
         <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none" />
         <div className="relative mx-auto max-w-6xl px-6 z-10">
           <motion.div
@@ -121,7 +164,7 @@ export default function Contact() {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="grid gap-12 lg:grid-cols-2 items-start">
+            <div className="mx-auto max-w-4xl">
               {/* Form */}
               <Card className="p-8 md:p-10 border border-white/10 bg-gradient-to-br from-white/[0.03] to-white/[0.01]">
                 {status === 'success' ? (
@@ -275,18 +318,42 @@ export default function Contact() {
 
                       <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.45 }}>
                         <label className={labelClasses}>Preferred Time <span className="text-indigo-400">*</span></label>
-                        <select
-                          name="preferredTime"
-                          value={formData.preferredTime}
-                          onChange={handleChange}
-                          required
-                          className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
-                        >
-                          <option value="">Select a time slot</option>
-                          {preferredTimeSlots.map((slot) => (
-                            <option key={slot} value={slot}>{slot}</option>
-                          ))}
-                        </select>
+                        <div className="grid grid-cols-3 gap-3">
+                          <select
+                            value={preferredHour}
+                            onChange={(e) => handleTimeChange('hour', e.target.value)}
+                            required
+                            className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
+                          >
+                            <option value="">Hour</option>
+                            {hourOptions.map((hour) => (
+                              <option key={hour} value={hour}>{hour}</option>
+                            ))}
+                          </select>
+                          <select
+                            value={preferredMinute}
+                            onChange={(e) => handleTimeChange('minute', e.target.value)}
+                            required
+                            className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
+                          >
+                            <option value="">Minute</option>
+                            {minuteOptions.map((minute) => (
+                              <option key={minute} value={minute}>{minute}</option>
+                            ))}
+                          </select>
+                          <select
+                            value={preferredPeriod}
+                            onChange={(e) => handleTimeChange('period', e.target.value)}
+                            required
+                            className={`${inputClasses} [&>option]:bg-slate-900 [&>option]:text-white`}
+                          >
+                            <option value="">AM/PM</option>
+                            {periodOptions.map((period) => (
+                              <option key={period} value={period}>{period}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <input type="hidden" name="preferredTime" value={formData.preferredTime} required />
                       </motion.div>
                     </div>
 
@@ -334,42 +401,10 @@ export default function Contact() {
                   </form>
                 )}
               </Card>
-
-              {/* Right column: image + what happens next */}
-              <div className="grid gap-8">
-                <Card className="overflow-hidden p-0 border border-white/10 group">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent z-10 pointer-events-none opacity-60" />
-                  <img
-                    src={visuals.contact}
-                    alt="Friendly support team"
-                    className="h-[350px] w-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </Card>
-                <Card className="p-8 border border-white/10 bg-white/[0.02]">
-                  <h3 className="font-display text-2xl font-bold text-white tracking-tight">What Happens Next</h3>
-                  <p className="mt-4 text-base text-slate-400 leading-relaxed">
-                    We review your needs, propose the best setup, and guide you through launch with a dedicated team.
-                  </p>
-                  <div className="mt-8 grid gap-4">
-                    {['Fast response within 24 hours', 'Private onboarding call', 'Tailored platform setup'].map(
-                      (item) => (
-                        <div
-                          key={item}
-                          className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.02] px-5 py-4 text-sm font-medium text-slate-300 hover:bg-white/[0.05] transition-colors"
-                        >
-                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-                          {item}
-                        </div>
-                      )
-                    )}
-                  </div>
-                </Card>
-              </div>
             </div>
           </motion.div>
 
-          <div className="mt-10 grid w-full gap-6 items-stretch lg:grid-cols-2">
+          <div className="mt-8 grid w-full gap-6 items-stretch lg:grid-cols-2">
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -426,25 +461,6 @@ export default function Contact() {
               </Card>
             </motion.div>
           </div>
-
-          {/* Contact info strip */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6"
-          >
-            {[
-              { title: 'Email', value: 'info@closedcircuit.com' },
-              { title: 'Phone', value: '+91 98765 43210' },
-              { title: 'Hours', value: 'Mon-Sat, 9:00 AM - 9:00 PM IST' },
-            ].map((contact, idx) => (
-              <Card key={idx} className="p-8 text-center border border-white/10 bg-gradient-to-br from-indigo-500/5 to-transparent hover:border-indigo-500/20 transition-all hover:-translate-y-1">
-                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{contact.title}</h3>
-                <p className="text-indigo-400 font-semibold text-lg">{contact.value}</p>
-              </Card>
-            ))}
-          </motion.div>
         </div>
       </section>
     </motion.div>

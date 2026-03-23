@@ -3,28 +3,9 @@ import { Mic, ShieldCheck, Users } from 'lucide-react';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import { visuals } from '../data/visuals';
+import voiceFlowVideo from '../assets/8059186-hd_1366_720_25fps.mp4';
 
 export default function FlowVoice() {
-  const voiceFlow = [
-    {
-      title: 'Record a Voice Memory',
-      description: 'Capture spoken stories, blessings, or announcements directly inside your community.',
-      icon: Mic,
-    },
-    {
-      title: 'Admin Approval and Group Visibility',
-      description:
-        'Voice posts follow the same approval workflow, ensuring only trusted content reaches the right groups.',
-      icon: ShieldCheck,
-    },
-    {
-      title: 'Private Listening Experience',
-      description:
-        'Only assigned members can listen and respond, creating intimate conversations with people who matter.',
-      icon: Users,
-    },
-  ];
-
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-[#030712] text-slate-300">
       <Hero
@@ -33,23 +14,23 @@ export default function FlowVoice() {
         subtitle="Share spoken memories and heartfelt messages with the same privacy controls that protect your community."
       />
 
-      {/* 3-col feature strip — full width */}
+      {/* Video section */}
       <section className="relative py-24 border-b border-white/5 bg-[#030712] overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none" />
-        <div className="relative z-10 mx-auto max-w-6xl px-6">
-          <div className="grid gap-8 sm:grid-cols-3">
-            {voiceFlow.map((item) => {
-              const Icon = item.icon;
-              return (
-                <Card key={item.title} className="p-8 border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-all hover:-translate-y-1 group">
-                  <div className="p-4 bg-indigo-500/10 rounded-2xl w-fit mb-6 border border-indigo-500/20 group-hover:bg-indigo-500/20 transition-colors">
-                    <Icon className="h-8 w-8 text-indigo-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white tracking-tight">{item.title}</h3>
-                  <p className="mt-3 text-base text-slate-400 leading-relaxed">{item.description}</p>
-                </Card>
-              );
-            })}
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div className="flex justify-center">
+            <video
+              src={voiceFlowVideo}
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-[320px] w-full max-w-[1100px] rounded-2xl object-cover shadow-2xl md:h-[380px]"
+            >
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </section>

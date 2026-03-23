@@ -5,7 +5,7 @@ export default function Hero({
   subtitle,
   eyebrow,
   gradient = 'from-[#030712] via-[#0f172a] to-[#030712]',
-  contentClassName = 'mx-auto max-w-6xl px-6 py-32 md:py-48 text-center',
+  contentClassName = 'mx-auto max-w-6xl px-6 py-16 md:py-24 text-center',
 }) {
   return (
     <motion.section
