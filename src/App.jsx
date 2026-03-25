@@ -51,6 +51,9 @@ export default function App() {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </AnimatePresence>
+        <footer className="bg-[#030712] text-slate-400 text-center py-6 border-t border-white/5">
+          <p>&copy; 2026 Closed Circuit AI Pvt Ltd</p>
+        </footer>
       </div>
     </Router>
   );

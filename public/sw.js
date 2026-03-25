@@ -1,13 +1,13 @@
-const APP_SHELL_CACHE = 'closed-circuit-shell-v1';
-const RUNTIME_CACHE = 'closed-circuit-runtime-v1';
+const APP_SHELL_CACHE = 'closed-circuit-shell-v2';
+const RUNTIME_CACHE = 'closed-circuit-runtime-v2';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/offline.html',
   '/manifest.webmanifest',
   '/favicon.svg',
-  '/pwa-192.png',
-  '/pwa-512.png',
+  '/pwa-192-v2.png',
+  '/pwa-512-v2.png',
   '/apple-touch-icon.png',
 ];
 

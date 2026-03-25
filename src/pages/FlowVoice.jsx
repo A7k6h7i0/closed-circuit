@@ -3,7 +3,7 @@ import { Mic, ShieldCheck, Users } from 'lucide-react';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import { visuals } from '../data/visuals';
-import voiceFlowVideo from '../assets/8059186-hd_1366_720_25fps.mp4';
+import voiceFlowVideo from '../assets/flow_in_voice.mp4';
 
 export default function FlowVoice() {
   return (

@@ -358,7 +358,7 @@ export default function Contact() {
                     </div>
 
                     <motion.div initial={{ y: 10, opacity: 0 }} whileInView={{ y: 0, opacity: 1 }} transition={{ delay: 0.5 }}>
-                      <label className={labelClasses}>Description</label>
+                      <label className={labelClasses}>Kindly mention any specific information if you have</label>
                       <textarea
                         name="description"
                         value={formData.description}

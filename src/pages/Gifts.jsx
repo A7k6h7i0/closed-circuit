@@ -3,6 +3,7 @@ import { Gift, Lock, Sparkles, Heart, Users, GraduationCap, Home, Star, Shield, 
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import { visuals } from '../data/visuals';
+import giftsVideo from '../assets/gifts_in_voice.mp4';
 
 export default function Gifts() {
   const giftOccasions = [
@@ -31,6 +32,27 @@ export default function Gifts() {
         title="A Unique Gift Idea for Every Special Occasion"
         subtitle="A modern gift for the digital world — a private platform for memories."
       />
+
+      {/* Video section */}
+      <section className="relative py-24 border-b border-white/5 bg-[#030712] overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-indigo-500/10 blur-[150px] rounded-full pointer-events-none" />
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div className="flex justify-center">
+            <video
+              src={giftsVideo}
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-[320px] w-full max-w-[1100px] rounded-2xl object-cover shadow-2xl md:h-[380px]"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
 
       {/* Section 1: Hero image + Occasion chips + Unique gift card */}
       <section className="relative py-32 border-b border-white/5 bg-[#030712] overflow-hidden">
